@@ -11,6 +11,7 @@ from pwr import pwr
 from prod import prod
 from plus import plus
 from quot import quot
+from ln import ln
 
 def deriv(expr):
     if isinstance(expr, const):
@@ -23,6 +24,9 @@ def deriv(expr):
         return plus_deriv(expr)
     elif isinstance(expr, quot):
         return quot_deriv(expr)
+    elif isinstance(expr, ln):
+        #TODO
+        pass
     else:
         raise Exception('deriv:' + repr(expr))
 
@@ -141,3 +145,7 @@ def quot_deriv(p):# f/g = (gf'-fg')/g^2 quotient rule
         return const(0)
     else:
         return quot(plus(prod(g, deriv(f)), prod(const(-1),prod(f, deriv(g)))), pwr(g, const(2.0)))
+
+def ln_deriv(p):
+    #TODO
+    pass

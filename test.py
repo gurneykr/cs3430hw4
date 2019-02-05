@@ -169,33 +169,89 @@ class Assign01UnitTests(unittest.TestCase):
             assert abs(gt(i) - drvf(i)) <= err
         print('Test 08: pass')
 
-    def test_09(self):
-        #x(x+1)(x+2) drv =
-        print('*******Test 09********')
-        fex = make_prod(make_pwr('x', 1.0),
-                        make_prod(make_plus(make_prod('x', 1.0),
-                                            make_const(1.0)),
-                                  make_plus(make_pwr('x', 1.0),
-                                            make_const(2.0))))
-        drv = logdiff(fex)
-        assert not drv is None
-        print(drv)
-        drvf = tof(drv)
-        assert not drvf is None
-        def gt_drvf(x):
-            x = x*(x+1.0)*(x+2.0)
-            z2 = (1.0/x + 1.0/(x + 1.0) + 1.0/(x + 2.0))
-            return x * z2
-        err = 0.0001
-        for i in range(1, 10):
-            print(drvf(i), gt_drvf(i))
-            assert abs(gt_drvf(i) - drvf(i)) <= err
-        for i in range(-10, -1):
-            if i == -1 or i == -2:
-                continue
-            print(drvf(i), gt_drvf(i))
-            assert abs(gt_drvf(i) - drvf(i)) <= err
-        print('Test 09: pass')
+    # def test_09(self):
+    #     '''x(x+1)(x+2) drv = (((x^1.0)*(((x^1.0)+1.0)*((x^1.0)+2.0)))*(((1.0/(x^1.0))*(1.0*(x^0.0)))+
+    #                             (((1.0/((x^1.0)+1.0))*((1.0*(x^0.0))+0.0))+((1.0/((x^1.0)+2.0))* ((1.0*(x^0.0))+0.0)))))
+    #     '''
+    #     print('*******Test 09********')
+    #     fex = make_prod(make_pwr('x', 1.0),
+    #                     make_prod(make_plus(make_prod('x', 1.0),
+    #                                         make_const(1.0)),
+    #                               make_plus(make_pwr('x', 1.0),
+    #                                         make_const(2.0))))
+    #     drv = logdiff(fex)
+    #     assert not drv is None
+    #     print(drv)
+    #     drvf = tof(drv)
+    #     assert not drvf is None
+    #     def gt_drvf(x):
+    #         x = x*(x+1.0)*(x+2.0)
+    #         z2 = (1.0/x + 1.0/(x + 1.0) + 1.0/(x + 2.0))
+    #         return x * z2
+    #     err = 0.0001
+    #     for i in range(1, 10):
+    #         print(drvf(i), gt_drvf(i))
+    #         assert abs(gt_drvf(i) - drvf(i)) <= err
+    #     for i in range(-10, -1):
+    #         if i == -1 or i == -2:
+    #             continue
+    #         print(drvf(i), gt_drvf(i))
+    #         assert abs(gt_drvf(i) - drvf(i)) <= err
+    #     print('Test 09: pass')
+
+    # def test_10(self):
+    #     '''
+    #     (x^2 +1)(x^3 -3)(2x + 5) drv =
+    #     '''
+    #     print('*******Test 10********')
+    #     fex1 = make_plus(make_pwr('x', 2.0), make_const(1.0))
+    #     fex2 = make_plus(make_pwr('x', 3.0), make_const(-3.0))
+    #     fex3 = make_plus(make_prod(make_const(2.0),
+    #                                make_pwr('x', 1.0)),
+    #                      make_const(5.0))
+    #     fex = make_prod(fex1, make_prod(fex2, fex3))
+    #     print(fex)
+    #     drv = logdiff(fex)
+    #     assert not drv is None
+    #     print(drv)
+    #     drvf = tof(drv)
+    #     assert not drvf is None
+    #     def gt_drvf(x):
+    #         z = (x**2 + 1.0)*(x**3 - 3.0)*(2*x + 5.0)
+    #         z2 = ((2.0*x)/(x**2 + 1) + (3.0*(x**2))/(x**3 - 3.0)+ 2.0/(2*x + 5.0))
+    #         return z * z2
+    #     err = 0.0001
+    #     for i in range(1, 10):
+    #         print(drvf(i), gt_drvf(i))
+    #         assert abs(gt_drvf(i) - drvf(i)) <= err
+    #     print('Test 10: pass')
+    #
+    # def test_11(self):
+    #     '''
+    #     (x+1)^4 *(4x-1)^2
+    #     '''
+    #     print('*******Test 10********')
+    #     fex1 = make_pwr_expr(make_plus(make_pwr('x', 1.0), make_const(1.0)), 4.0)
+    #     fex2 = make_pwr_expr(make_plus(make_prod(make_const(4.0),
+    #                                              make_pwr('x', 1.0)),
+    #                                    make_const(-1.0)), 2.0)
+    #     fex = make_prod(fex1, fex2)
+    #     print(fex)
+    #     drv = logdiff(fex)
+    #     assert not drv is None
+    #     print(drv)
+    #     drvf = tof(drv)
+    #     assert not drvf is None
+    #     def gt_drvf(x):
+    #         z1 = ((x + 1.0) **4.0) * ((4*x - 1.0)** 2.0)
+    #         z2 = (4.0/(x + 1.0)) + (8.0/ (4*x - 1.0))
+    #         return z1 * z2
+    #
+    #     err = 0.0001
+    #     for i in range(1, 10):
+    #         print(drvf(i), gt_drvf(i))
+    #         assert abs(gt_drvf(i) - drvf(i)) <= err
+    #     print('Test 11: pass')
 
     if __name__ == "__main__":
         unittest.main()

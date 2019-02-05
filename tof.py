@@ -13,6 +13,7 @@ from pwr import pwr
 from prod import prod
 from plus import plus
 from quot import quot
+from ln import ln
 import math
 
 
@@ -27,6 +28,9 @@ def tof(expr):
         return plus_tof(expr)
     elif isinstance(expr, quot):
         return quot_tof(expr)
+    elif isinstance(expr, ln):
+        #TODO
+        pass
     else:
         raise Exception('tof: ' + str(expr))
 
@@ -128,3 +132,7 @@ def quot_tof(expr):
         def f(x):
             return tof(f1)(x) / tof(f2)(x)
         return f
+
+def ln_tof(expr):
+    #TODO
+    pass
