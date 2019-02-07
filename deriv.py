@@ -25,8 +25,7 @@ def deriv(expr):
     elif isinstance(expr, quot):
         return quot_deriv(expr)
     elif isinstance(expr, ln):
-        #TODO
-        pass
+        return ln_deriv(expr)
     else:
         raise Exception('deriv:' + repr(expr))
 
@@ -74,6 +73,8 @@ def pwr_deriv(p):
             return prod(prod(d, pwr(b, const(d.get_val()-1))) ,deriv(b))
         else:
             raise Exception('power_deriv: case 5: ' + str(p))
+    elif isinstance(b, ln):#(lnx)^5
+        return prod(prod(d, pwr(b, const(d.get_val() - 1))), deriv(b))
     else:
         raise Exception('power_deriv: case 6: ' + str(p))
 
@@ -147,5 +148,7 @@ def quot_deriv(p):# f/g = (gf'-fg')/g^2 quotient rule
         return quot(plus(prod(g, deriv(f)), prod(const(-1),prod(f, deriv(g)))), pwr(g, const(2.0)))
 
 def ln_deriv(p):
-    #TODO
-    pass
+    #ln[g(x)] = 1/g(x) * g'(x)
+    assert isinstance(p, ln)
+    g = p.get_expr()
+    return prod(quot(const(1.0), g), deriv(g))

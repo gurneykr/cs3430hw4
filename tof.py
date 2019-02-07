@@ -29,8 +29,7 @@ def tof(expr):
     elif isinstance(expr, quot):
         return quot_tof(expr)
     elif isinstance(expr, ln):
-        #TODO
-        pass
+        return ln_tof(expr)
     else:
         raise Exception('tof: ' + str(expr))
 
@@ -50,8 +49,8 @@ def pwr_tof(expr):
     if isinstance(f1, var) and not isinstance(f2, var):
         def f(x):
             temp = tof(f2)(x)
-            if type(x) == const:
-                print("found it")
+            # if type(x) == const:
+            #     print("found it")
             return math.pow(x, tof(f2)(x))
         return f
     elif isinstance(f1, var) and isinstance(f2, var):
@@ -134,5 +133,9 @@ def quot_tof(expr):
         return f
 
 def ln_tof(expr):
-    #TODO
-    pass
+    assert isinstance(expr, ln)
+    g = expr.get_expr()
+    def f(x):
+        return math.log(tof(g)(x))
+    return f
+
