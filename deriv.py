@@ -122,6 +122,8 @@ def prod_deriv(p):
                 return const(0)
             else:
                 return prod(deriv(m1), m2)
+        elif isinstance(m2, ln):#(x^3) * (ln x)
+            return plus(prod(deriv(m1), m2), prod(m1, deriv(m2)))
         else:
             raise Exception('prod_deriv: case 2:' + str(p))
 

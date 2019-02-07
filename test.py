@@ -103,44 +103,44 @@ class Assign01UnitTests(unittest.TestCase):
     #     assert not drv is None
     #     print(drv)
 
-    def test_05(self):
-        '''
-        (ln x)^5 drv = ((5.0*(ln(x^1.0)^4.0))*((1.0/(x^1.0))*(1.0*(x^0.0))))
-        '''
-        print('*******Test 05********')
-        fex = make_pwr_expr(make_ln(make_pwr('x', 1.0)), 5.0)
-        print(fex)
-        drv = deriv(fex)
-        assert not drv is None
-        print(drv)
-        drvf = tof(drv)
-        assert not drvf is None
-        gt = lambda x: (5.0*(math.log(x, math.e)**4))/x
-        err = 0.0001
-        for i in range(1, 5):
-            print(drvf(i), gt(i))
-            assert abs(gt(i) - drvf(i)) <= err
-        print('Test 05: pass')
-
-    # def test_06(self):
+    # def test_05(self):
     #     '''
-    #     x ln(x) drv =  (((x^1.0)*((1.0/(x^1.0))*(1.0*(x^0.0))))+(ln(x^1.0)*(1.0*(x^0.0)))
+    #     (ln x)^5 drv = ((5.0*(ln(x^1.0)^4.0))*((1.0/(x^1.0))*(1.0*(x^0.0))))
     #     '''
-    #     print('*******Test 06********')
-    #     fex = make_prod(make_pwr('x', 1.0), make_ln(make_pwr('x', 1.0)))
+    #     print('*******Test 05********')
+    #     fex = make_pwr_expr(make_ln(make_pwr('x', 1.0)), 5.0)
     #     print(fex)
     #     drv = deriv(fex)
     #     assert not drv is None
     #     print(drv)
     #     drvf = tof(drv)
     #     assert not drvf is None
-    #     gt = lambda x: 1.0 + math.log(x, math.e)
+    #     gt = lambda x: (5.0*(math.log(x, math.e)**4))/x
     #     err = 0.0001
-    #     for i in range(1, 10):
+    #     for i in range(1, 5):
     #         print(drvf(i), gt(i))
     #         assert abs(gt(i) - drvf(i)) <= err
-    #     print('Test 06: pass')
-    #
+    #     print('Test 05: pass')
+
+    def test_06(self):
+        '''
+        x ln(x) drv =  (((x^1.0)*((1.0/(x^1.0))*(1.0*(x^0.0))))+(ln(x^1.0)*(1.0*(x^0.0)))
+        '''
+        print('*******Test 06********')
+        fex = make_prod(make_pwr('x', 1.0), make_ln(make_pwr('x', 1.0)))
+        print(fex)
+        drv = deriv(fex)
+        assert not drv is None
+        print(drv)
+        drvf = tof(drv)
+        assert not drvf is None
+        gt = lambda x: 1.0 + math.log(x, math.e)
+        err = 0.0001
+        for i in range(1, 10):
+            print(drvf(i), gt(i))
+            assert abs(gt(i) - drvf(i)) <= err
+        print('Test 06: pass')
+
     # def test_07(self):
     #     '''
     #     ln(x e^x) drv =  (((1.0/(x^1.0))*(1.0*(x^0.0)))+((1.0/(2.71828182846^(x^1.0)))* x‘((2.71828182846^(x^1.0))*(1.0*(x^0.0)))))
