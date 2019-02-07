@@ -15,7 +15,7 @@ class Assign01UnitTests(unittest.TestCase):
     def test_01(self):
         #e^(5x) drv = ((2.71828182846^(5.0*(x^1.0)))*(5.0*(1.0*(x^0.0))))
         print('*******Test 01 ********')
-        fex = make_e_expr(make_prod(make_const(5.0), make_pwr('x'), 1.0))
+        fex = make_e_expr(make_prod(make_const(5.0), make_pwr('x', 1.0)))
         print(fex)
         drv = deriv(fex)
         assert not drv is None
