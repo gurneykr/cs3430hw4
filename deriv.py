@@ -45,6 +45,10 @@ def pwr_deriv(p):
     assert isinstance(p, pwr)
     b = p.get_base()
     d = p.get_deg()
+    if isinstance(b, const):
+        if isinstance(d, pwr): #e^(x^1)
+            return p
+        #e^(2x)
     if isinstance(b, var):
         if isinstance(d, const):
             return prod(d, pwr(b, const(d.get_val()-1)))
@@ -55,6 +59,8 @@ def pwr_deriv(p):
     if isinstance(b, pwr):  # think this is (x^2 (^3))
         if isinstance(d, const):
            return prod(b.get_base(), prod(b.get_deg(), const))
+        elif isinstance(d, pwr):#e^(x^1)
+            return p
         else:
             raise Exception('pwr_deriv: case 2: ' + str(p))
     elif isinstance(b, plus):  # (x+2)^3
@@ -123,6 +129,8 @@ def prod_deriv(p):
             else:
                 return prod(deriv(m1), m2)
         elif isinstance(m2, ln):#(x^3) * (ln x)
+            return plus(prod(deriv(m1), m2), prod(m1, deriv(m2)))
+        elif isinstance(m2, pwr):#(x^1)*(e^(x^1))
             return plus(prod(deriv(m1), m2), prod(m1, deriv(m2)))
         else:
             raise Exception('prod_deriv: case 2:' + str(p))
