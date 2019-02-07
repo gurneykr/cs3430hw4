@@ -12,6 +12,7 @@ from prod import prod
 from plus import plus
 from quot import quot
 from ln import ln
+from absv import absv
 
 def deriv(expr):
     if isinstance(expr, const):
@@ -26,6 +27,8 @@ def deriv(expr):
         return quot_deriv(expr)
     elif isinstance(expr, ln):
         return ln_deriv(expr)
+    elif isinstance(expr, absv):
+        return absv_deriv(expr)
     else:
         raise Exception('deriv:' + repr(expr))
 
@@ -162,3 +165,7 @@ def ln_deriv(p):
     assert isinstance(p, ln)
     g = p.get_expr()
     return prod(quot(const(1.0), g), deriv(g))
+
+def absv_deriv(p):
+    assert isinstance(p, absv)
+    return deriv(p.get_expr())

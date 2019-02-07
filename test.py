@@ -141,45 +141,45 @@ class Assign01UnitTests(unittest.TestCase):
     #         assert abs(gt(i) - drvf(i)) <= err
     #     print('Test 06: pass')
 
-    def test_07(self):
-        '''
-        ln(x e^x) drv =  (((1.0/(x^1.0))*(1.0*(x^0.0)))+((1.0/(2.71828182846^(x^1.0)))* x‘((2.71828182846^(x^1.0))*(1.0*(x^0.0)))))
-        '''
-        print('*******Test 07********')
-        fex0 = make_prod(make_pwr('x', 1.0), make_e_expr(make_pwr('x', 1.0)))
-        fex = make_ln(fex0)
-        print(fex)
-        drv = deriv(fex)
-        assert not drv is None
-        print("drv: ",drv)
-        drvf = tof(drv)
-        assert not drvf is None
-        gt = lambda x: (x + 1.0)/x
-        err = 0.0001
-        for i in range(1, 10):
-            print(drvf(i), gt(i))
-            assert abs(gt(i) - drvf(i)) <= err
-        for i in range(-10, -1):
-            print(drvf(i), gt(i))
-            assert abs(gt(i) - drvf(i)) <= err
-        print('Test 07: pass')
-
-    # def test_08(self):
-    #     #ln|x| drv = ((x^1.0)^-1.0)
-    #     print('*******Test 08********')
-    #     fex = make_ln(make_absv(make_pwr('x', 1.0)))
+    # def test_07(self):
+    #     '''
+    #     ln(x e^x) drv =  (((1.0/(x^1.0))*(1.0*(x^0.0)))+((1.0/(2.71828182846^(x^1.0)))* x‘((2.71828182846^(x^1.0))*(1.0*(x^0.0)))))
+    #     '''
+    #     print('*******Test 07********')
+    #     fex0 = make_prod(make_pwr('x', 1.0), make_e_expr(make_pwr('x', 1.0)))
+    #     fex = make_ln(fex0)
     #     print(fex)
     #     drv = deriv(fex)
     #     assert not drv is None
-    #     print(drv)
+    #     print("drv: ",drv)
     #     drvf = tof(drv)
     #     assert not drvf is None
-    #     gt = lambda x: 1.0/x
+    #     gt = lambda x: (x + 1.0)/x
     #     err = 0.0001
     #     for i in range(1, 10):
     #         print(drvf(i), gt(i))
     #         assert abs(gt(i) - drvf(i)) <= err
-    #     print('Test 08: pass')
+    #     for i in range(-10, -1):
+    #         print(drvf(i), gt(i))
+    #         assert abs(gt(i) - drvf(i)) <= err
+    #     print('Test 07: pass')
+
+    def test_08(self):
+        #ln|x| drv = ((x^1.0)^-1.0)
+        print('*******Test 08********')
+        fex = make_ln(make_absv(make_pwr('x', 1.0)))
+        print(fex)
+        drv = deriv(fex)
+        assert not drv is None
+        print(drv)
+        drvf = tof(drv)
+        assert not drvf is None
+        gt = lambda x: 1.0/x
+        err = 0.0001
+        for i in range(1, 10):
+            print(drvf(i), gt(i))
+            assert abs(gt(i) - drvf(i)) <= err
+        print('Test 08: pass')
 
     # def test_09(self):
     #     '''x(x+1)(x+2) drv = (((x^1.0)*(((x^1.0)+1.0)*((x^1.0)+2.0)))*(((1.0/(x^1.0))*(1.0*(x^0.0)))+

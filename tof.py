@@ -14,6 +14,7 @@ from prod import prod
 from plus import plus
 from quot import quot
 from ln import ln
+from absv import absv
 import math
 
 
@@ -30,6 +31,8 @@ def tof(expr):
         return quot_tof(expr)
     elif isinstance(expr, ln):
         return ln_tof(expr)
+    elif isinstance(expr, absv):
+        return absv_tof(expr)
     else:
         raise Exception('tof: ' + str(expr))
 
@@ -139,3 +142,9 @@ def ln_tof(expr):
         return math.log(tof(g)(x))
     return f
 
+def absv_tof(expr):
+    assert isinstance(expr, absv)
+    g = expr.get_expr()
+    def f(x):
+        return abs(tof(g)(x))
+    return f
