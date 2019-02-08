@@ -12,6 +12,7 @@ from prod import prod
 from plus import plus
 from quot import quot
 from ln import ln
+from maker import make_ln
 from absv import absv
 
 def deriv(expr):
@@ -123,6 +124,8 @@ def prod_deriv(p):
                 return const(0)
             else:
                 return prod(m1, deriv(m2))
+        elif isinstance(m2, plus):#(x+1)(x+2)
+            return plus(deriv(m1), deriv(m2))
         else:
             raise Exception('prod_deriv: case 1:' + str(p))
     elif isinstance(m1, pwr):
@@ -169,3 +172,33 @@ def ln_deriv(p):
 def absv_deriv(p):
     assert isinstance(p, absv)
     return deriv(p.get_expr())
+
+def logdiff(p):
+    assert isinstance(p, prod)
+    m1 = p.get_mult1()
+    m2 = p.get_mult2()
+
+    if isinstance(m1, plus):#(x+1)(x+2)
+        if isinstance(m2, plus):
+            return prod(p, plus(prod(quot(const(1.0), m1),
+                                 deriv(m1)),
+                            prod(quot(const(1.0), m2),
+                                 deriv(m2))))
+    elif isinstance(m1, pwr):#x (x+1)(x+3)
+        if isinstance(m2, prod):
+            #return prod(, logdiff(m2))
+
+
+    #return prod(p, plus(quot(deriv(m1), m1), quot(deriv(m2), m2)))
+
+'''want:
+p *     ((1/m1)*deriv(m1)) + ((1/m2)*deriv(m2))
+
+(((x^1.0)*(((x^1.0)+1.0)*((x^1.0)+2.0)))*    ( ( (1.0/(x^1.0)) * (1.0*(x^0.0)) )+
+                                        (( (1.0/((x^1.0)+1.0)) *((1.0*(x^0.0))+0.0))+((1.0/((x^1.0)+2.0))* ((1.0*(x^0.0))+0.0))))
+
+
+my results
+(((x^1.0)*(((x^1.0)+1.0)*((x^1.0)+2.0))) *  ( ( (1.0/(x^1.0)) * (1.0*(x^0.0)) ) +
+                                        ((1.0/(((x^1.0)+1.0)*((x^1.0)+2.0)))*((1.0*(x^0.0))+(1.0*(x^0.0))))))
+'''

@@ -6,6 +6,7 @@ from plus import plus
 from quot import quot
 from maker import make_const, make_pwr, make_pwr_expr, make_plus, make_prod, make_quot, make_e_expr, make_ln, make_absv
 from tof import tof
+from deriv import logdiff
 from deriv import deriv
 import unittest
 import math
@@ -164,42 +165,38 @@ class Assign01UnitTests(unittest.TestCase):
     #         assert abs(gt(i) - drvf(i)) <= err
     #     print('Test 07: pass')
 
-    def test_08(self):
-        #ln|x| drv = ((x^1.0)^-1.0)
-        print('*******Test 08********')
-        fex = make_ln(make_absv(make_pwr('x', 1.0)))
-        print(fex)
-        drv = deriv(fex)
-        assert not drv is None
-        print(drv)
-        drvf = tof(drv)
-        assert not drvf is None
-        gt = lambda x: 1.0/x
-        err = 0.0001
-        for i in range(1, 10):
-            print(drvf(i), gt(i))
-            assert abs(gt(i) - drvf(i)) <= err
-        print('Test 08: pass')
+    # def test_08(self):
+    #     #ln|x| drv = ((x^1.0)^-1.0)
+    #     print('*******Test 08********')
+    #     fex = make_ln(make_absv(make_pwr('x', 1.0)))
+    #     print(fex)
+    #     drv = deriv(fex)
+    #     assert not drv is None
+    #     print(drv)
+    #     drvf = tof(drv)
+    #     assert not drvf is None
+    #     gt = lambda x: 1.0/x
+    #     err = 0.0001
+    #     for i in range(1, 10):
+    #         print(drvf(i), gt(i))
+    #         assert abs(gt(i) - drvf(i)) <= err
+    #     print('Test 08: pass')
 
-    # def test_09(self):
-    #     '''x(x+1)(x+2) drv = (((x^1.0)*(((x^1.0)+1.0)*((x^1.0)+2.0)))*(((1.0/(x^1.0))*(1.0*(x^0.0)))+
-    #                             (((1.0/((x^1.0)+1.0))*((1.0*(x^0.0))+0.0))+((1.0/((x^1.0)+2.0))* ((1.0*(x^0.0))+0.0)))))
+    # def test_09a(self):
+    #     '''(x+1)(x+2) drv = (((((x^1.0)+1.0)*((x^1.0)+2.0)))*(((1.0/(x^1.0))*(1.0*(x^0.0)))+
+    #                             (((1.0*(x^0.0))+0.0))+((1.0/((x^1.0)+2.0))* ((1.0*(x^0.0))+0.0)))))
     #     '''
     #     print('*******Test 09********')
-    #     fex = make_prod(make_pwr('x', 1.0),
-    #                     make_prod(make_plus(make_prod('x', 1.0),
-    #                                         make_const(1.0)),
-    #                               make_plus(make_pwr('x', 1.0),
-    #                                         make_const(2.0))))
+    #     fex = make_prod(make_plus(make_pwr('x', 1.0),make_const(1.0)),make_plus(make_pwr('x', 1.0), make_const(2.0)))
     #     drv = logdiff(fex)
     #     assert not drv is None
     #     print(drv)
     #     drvf = tof(drv)
     #     assert not drvf is None
     #     def gt_drvf(x):
-    #         x = x*(x+1.0)*(x+2.0)
-    #         z2 = (1.0/x + 1.0/(x + 1.0) + 1.0/(x + 2.0))
-    #         return x * z2
+    #         z = (x+1.0)*(x+2.0)
+    #         z2 = (1.0/(x + 1.0) + 1.0/(x + 2.0))
+    #         return z * z2
     #     err = 0.0001
     #     for i in range(1, 10):
     #         print(drvf(i), gt_drvf(i))
@@ -210,6 +207,36 @@ class Assign01UnitTests(unittest.TestCase):
     #         print(drvf(i), gt_drvf(i))
     #         assert abs(gt_drvf(i) - drvf(i)) <= err
     #     print('Test 09: pass')
+
+    def test_09(self):
+        '''x(x+1)(x+2) drv = (((x^1.0)*(((x^1.0)+1.0)*((x^1.0)+2.0)))*(((1.0/(x^1.0))*(1.0*(x^0.0)))+
+                                (((1.0/((x^1.0)+1.0))*((1.0*(x^0.0))+0.0))+((1.0/((x^1.0)+2.0))* ((1.0*(x^0.0))+0.0)))))
+        '''
+        print('*******Test 09********')
+        fex = make_prod(make_pwr('x', 1.0),
+                        make_prod(make_plus(make_pwr('x', 1.0),
+                                            make_const(1.0)),
+                                  make_plus(make_pwr('x', 1.0),
+                                            make_const(2.0))))
+        drv = logdiff(fex)
+        assert not drv is None
+        print(drv)
+        drvf = tof(drv)
+        assert not drvf is None
+        def gt_drvf(x):
+            z = x*(x+1.0)*(x+2.0)
+            z2 = (1.0/x + 1.0/(x + 1.0) + 1.0/(x + 2.0))
+            return z * z2
+        err = 0.0001
+        for i in range(1, 10):
+            print(drvf(i), gt_drvf(i))
+            assert abs(gt_drvf(i) - drvf(i)) <= err
+        for i in range(-10, -1):
+            if i == -1 or i == -2:
+                continue
+            print(drvf(i), gt_drvf(i))
+            assert abs(gt_drvf(i) - drvf(i)) <= err
+        print('Test 09: pass')
 
     # def test_10(self):
     #     '''
