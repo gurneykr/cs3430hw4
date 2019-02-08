@@ -138,6 +138,8 @@ def prod_deriv(p):
             return plus(prod(deriv(m1), m2), prod(m1, deriv(m2)))
         elif isinstance(m2, pwr):#(x^1)*(e^(x^1))
             return plus(prod(deriv(m1), m2), prod(m1, deriv(m2)))
+        elif isinstance(m2, prod):#(x^2)(2x)
+            return plus(prod(m1, deriv(m2)), prod(m2, deriv(m1)))
         else:
             raise Exception('prod_deriv: case 2:' + str(p))
 
@@ -174,22 +176,23 @@ def absv_deriv(p):
     return deriv(p.get_expr())
 
 def logdiff(p):
-    assert isinstance(p, prod)
-    m1 = p.get_mult1()
-    m2 = p.get_mult2()
+    # assert isinstance(p, prod)
+    if isinstance(p, prod):
+        m1 = p.get_mult1()
+        m2 = p.get_mult2()
 
-    if isinstance(m1, plus):#(x+1)(x+2)
-        if isinstance(m2, plus):
-            return prod(p, plus(prod(quot(const(1.0), m1),
-                                 deriv(m1)),
-                            prod(quot(const(1.0), m2),
-                                 deriv(m2))))
-    elif isinstance(m1, pwr):#x (x+1)(x+3)
-        if isinstance(m2, prod):
-            #return prod(, logdiff(m2))
+        if isinstance(m1, plus):#(x+1)(x+2)
+            if isinstance(m2, plus):
+                return prod(p, plus(prod(quot(const(1.0), m1),
+                                     deriv(m1)),
+                                prod(quot(const(1.0), m2),
+                                     deriv(m2))))
+        elif isinstance(m1, pwr):#x(x+1)(x+3)
+            if isinstance(m2, prod):
+                #return prod(, logdiff(m2))
+                return prod(p, ln_deriv(make_ln(p)))
 
-
-    #return prod(p, plus(quot(deriv(m1), m1), quot(deriv(m2), m2)))
+    #return prod(p, ln_deriv(make_ln(p)))
 
 '''want:
 p *     ((1/m1)*deriv(m1)) + ((1/m2)*deriv(m2))

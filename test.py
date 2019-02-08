@@ -185,6 +185,9 @@ class Assign01UnitTests(unittest.TestCase):
     # def test_09a(self):
     #     '''(x+1)(x+2) drv = (((((x^1.0)+1.0)*((x^1.0)+2.0)))*(((1.0/(x^1.0))*(1.0*(x^0.0)))+
     #                             (((1.0*(x^0.0))+0.0))+((1.0/((x^1.0)+2.0))* ((1.0*(x^0.0))+0.0)))))
+    #
+    #     (x+1)(x+2) * (1/(x+1))*1 + (1/(x+2))*1
+    #
     #     '''
     #     print('*******Test 09********')
     #     fex = make_prod(make_plus(make_pwr('x', 1.0),make_const(1.0)),make_plus(make_pwr('x', 1.0), make_const(2.0)))
@@ -208,10 +211,31 @@ class Assign01UnitTests(unittest.TestCase):
     #         assert abs(gt_drvf(i) - drvf(i)) <= err
     #     print('Test 09: pass')
 
+    # def test_9b(self):
+    #     fex = make_pwr('x', 1.0)
+    #     drv = logdiff(fex)
+    #     assert not drv is None
+    #     print(drv)
+    #     gt = lambda x: 1.0/x
+    #     for i in range(1, 10):
+    #         print(drv(i), gt(i))
+    #         assert drv(i) - gt(i) <= 0.0001
+    #     print('Test 9b pass')
+
     def test_09(self):
-        '''x(x+1)(x+2) drv = (((x^1.0)*(((x^1.0)+1.0)*((x^1.0)+2.0)))*(((1.0/(x^1.0))*(1.0*(x^0.0)))+
+        '''f(x) = x(x+1)(x+2) drv = (((x^1.0)*(((x^1.0)+1.0)*((x^1.0)+2.0)))*(((1.0/(x^1.0))*(1.0*(x^0.0)))+
                                 (((1.0/((x^1.0)+1.0))*((1.0*(x^0.0))+0.0))+((1.0/((x^1.0)+2.0))* ((1.0*(x^0.0))+0.0)))))
         '''
+        '''
+        f'(x) = x(x+1)(x+2) *d/dx[ln(x(x+1)(x+2))]
+
+
+        f'(x) = x(x+1)(x+2) * d/dx[ln(x(x+1)(x+2))]
+        f'(x) = x(x+1)(x+2) * d/dx[ln x + ln (x+1) + ln (x+2)]
+        f'(x) = x(x+1)(x+2) * [(1/x)*1 + (1/(x+1))*1 + (1/(x+2))*1]
+        '''
+
+
         print('*******Test 09********')
         fex = make_prod(make_pwr('x', 1.0),
                         make_prod(make_plus(make_pwr('x', 1.0),
@@ -219,6 +243,7 @@ class Assign01UnitTests(unittest.TestCase):
                                   make_plus(make_pwr('x', 1.0),
                                             make_const(2.0))))
         drv = logdiff(fex)
+        #drv = deriv(fex)
         assert not drv is None
         print(drv)
         drvf = tof(drv)
