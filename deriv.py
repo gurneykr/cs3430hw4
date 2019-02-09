@@ -177,22 +177,22 @@ def absv_deriv(p):
 
 def logdiff(p):
     # assert isinstance(p, prod)
-    if isinstance(p, prod):
-        m1 = p.get_mult1()
-        m2 = p.get_mult2()
+    # if isinstance(p, prod):
+    #     m1 = p.get_mult1()
+    #     m2 = p.get_mult2()
+    #
+    #     if isinstance(m1, plus):#(x+1)(x+2)
+    #         if isinstance(m2, plus):
+    #             return prod(p, plus(prod(quot(const(1.0), m1),
+    #                                  deriv(m1)),
+    #                             prod(quot(const(1.0), m2),
+    #                                  deriv(m2))))
+    #     elif isinstance(m1, pwr):#x(x+1)(x+3)
+    #         if isinstance(m2, prod):
+    #             #return prod(, logdiff(m2))
+    #             return prod(p, ln_deriv(make_ln(p)))
 
-        if isinstance(m1, plus):#(x+1)(x+2)
-            if isinstance(m2, plus):
-                return prod(p, plus(prod(quot(const(1.0), m1),
-                                     deriv(m1)),
-                                prod(quot(const(1.0), m2),
-                                     deriv(m2))))
-        elif isinstance(m1, pwr):#x(x+1)(x+3)
-            if isinstance(m2, prod):
-                #return prod(, logdiff(m2))
-                return prod(p, ln_deriv(make_ln(p)))
-
-    #return prod(p, ln_deriv(make_ln(p)))
+    return prod(p, ln_deriv(make_ln(p)))
 
 '''want:
 p *     ((1/m1)*deriv(m1)) + ((1/m2)*deriv(m2))
