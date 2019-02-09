@@ -302,7 +302,9 @@ class Assign01UnitTests(unittest.TestCase):
 
     def test_11(self):
         '''
-        (x+1)^4 *(4x-1)^2
+        (x+1)^4 *(4x-1)^2 => (x+1)^4 *(4x-1)^2 * ( (4/(x+1) + 8/(4x-1))
+
+        ln(x+1)^4
         '''
         print('*******Test 10********')
         fex1 = make_pwr_expr(make_plus(make_pwr('x', 1.0), make_const(1.0)), 4.0)
