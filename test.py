@@ -299,33 +299,33 @@ class Assign01UnitTests(unittest.TestCase):
     #         print(drvf(i), gt_drvf(i))
     #         assert abs(gt_drvf(i) - drvf(i)) <= err
     #     print('Test 10: pass')
-    #
-    # def test_11(self):
-    #     '''
-    #     (x+1)^4 *(4x-1)^2
-    #     '''
-    #     print('*******Test 10********')
-    #     fex1 = make_pwr_expr(make_plus(make_pwr('x', 1.0), make_const(1.0)), 4.0)
-    #     fex2 = make_pwr_expr(make_plus(make_prod(make_const(4.0),
-    #                                              make_pwr('x', 1.0)),
-    #                                    make_const(-1.0)), 2.0)
-    #     fex = make_prod(fex1, fex2)
-    #     print(fex)
-    #     drv = logdiff(fex)
-    #     assert not drv is None
-    #     print(drv)
-    #     drvf = tof(drv)
-    #     assert not drvf is None
-    #     def gt_drvf(x):
-    #         z1 = ((x + 1.0) **4.0) * ((4*x - 1.0)** 2.0)
-    #         z2 = (4.0/(x + 1.0)) + (8.0/ (4*x - 1.0))
-    #         return z1 * z2
-    #
-    #     err = 0.0001
-    #     for i in range(1, 10):
-    #         print(drvf(i), gt_drvf(i))
-    #         assert abs(gt_drvf(i) - drvf(i)) <= err
-    #     print('Test 11: pass')
+
+    def test_11(self):
+        '''
+        (x+1)^4 *(4x-1)^2
+        '''
+        print('*******Test 10********')
+        fex1 = make_pwr_expr(make_plus(make_pwr('x', 1.0), make_const(1.0)), 4.0)
+        fex2 = make_pwr_expr(make_plus(make_prod(make_const(4.0),
+                                                 make_pwr('x', 1.0)),
+                                       make_const(-1.0)), 2.0)
+        fex = make_prod(fex1, fex2)
+        print(fex)
+        drv = logdiff(fex)
+        assert not drv is None
+        print(drv)
+        drvf = tof(drv)
+        assert not drvf is None
+        def gt_drvf(x):
+            z1 = ((x + 1.0) **4.0) * ((4*x - 1.0)** 2.0)
+            z2 = (4.0/(x + 1.0)) + (8.0/ (4*x - 1.0))
+            return z1 * z2
+
+        err = 0.0001
+        for i in range(1, 10):
+            #print(drvf(i), gt_drvf(i))
+            assert abs(gt_drvf(i) - drvf(i)) <= err
+        print('Test 11: pass')
 
     if __name__ == "__main__":
         unittest.main()

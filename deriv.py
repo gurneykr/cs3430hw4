@@ -69,12 +69,12 @@ def pwr_deriv(p):
             raise Exception('pwr_deriv: case 2: ' + str(p))
     elif isinstance(b, plus):  # (x+2)^3
         if isinstance(d, const):
-            return prod(d, pwr(b, d.get_val()-1))
+            return prod(d, pwr(b, const(d.get_val()-1)))
         else:
             raise Exception('pwr_deriv: case 3: ' + str(p))
     elif isinstance(b, prod):#(3x)^2 => (2*3*x)^(2-1)
         if isinstance(d, const):
-            pwr( prod(d, prod(b.get_mult1(), b.get_mult2())), d.get_val()-1)
+            pwr( prod(d, prod(b.get_mult1(), b.get_mult2())), const(d.get_val()-1))
         else:
             raise Exception('pwr_deriv: case 4: ' + str(p))
     elif isinstance(b, quot):
@@ -174,6 +174,9 @@ def ln_deriv(p):
         m2 = g.get_mult2()
         #(x)(x+1)
         #ln(x) + ln(x+1)
+        if isinstance(m1, pwr) and isinstance(m2, pwr):
+            return plus(quot(prod(m1.get_deg(), deriv(m1.get_base())), m1.get_base()),
+                        quot(prod(m2.get_deg(), deriv(m2.get_base())), m2.get_base()))
         return plus(ln_deriv(make_ln(m1)), ln_deriv(make_ln(m2)))
     else:
         return prod(quot(const(1.0), g), deriv(g))
