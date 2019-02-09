@@ -169,7 +169,14 @@ def ln_deriv(p):
     #ln[g(x)] = 1/g(x) * g'(x)
     assert isinstance(p, ln)
     g = p.get_expr()
-    return prod(quot(const(1.0), g), deriv(g))
+    if isinstance(g, prod):
+        m1 = g.get_mult1()
+        m2 = g.get_mult2()
+        #(x)(x+1)
+        #ln(x) + ln(x+1)
+        return plus(ln_deriv(make_ln(m1)), ln_deriv(make_ln(m2)))
+    else:
+        return prod(quot(const(1.0), g), deriv(g))
 
 def absv_deriv(p):
     assert isinstance(p, absv)
