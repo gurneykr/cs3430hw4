@@ -99,6 +99,8 @@ def prod_deriv(p):
             # 3x^1  becomes (1*3)x^0 => simplified is 3
             if isinstance(m2.get_deg(), const) and m2.get_deg().get_val() == 1:
                 return m1
+            elif isinstance(m2.get_deg(), const) and m2.get_deg().get_val() == 0:
+                return m1
             else:
                 # get 6 * 3
                 simplifiedAlt1 = const(m1.get_val() * m2.get_deg().get_val())
@@ -143,7 +145,7 @@ def prod_deriv(p):
         else:
             raise Exception('prod_deriv: case 2:' + str(p))
 
-    elif isinstance(m1, prod):
+    elif isinstance(m1, prod) or isinstance(m1, quot):
         if isinstance(m2, const):#(3x)*4
             if isinstance(deriv(m2), const):
                 return const(0)
