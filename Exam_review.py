@@ -85,7 +85,13 @@ def problem_02():
         print(drvf(i), gt(i))
         assert abs(gt(i) - drvf(i)) <= 0.001
 
-
+def problem_03():
+    fex = make_e_expr(make_pwr('x', 1.0))
+    print("f(x)= ",fex)
+    drv = deriv(fex)
+    print("f'(x)= ",drv)
+    drvf = tof(drv)
+    print("f'(-1)= ",drvf(-1))
 
 if __name__ == "__main__":
-    problem_02()
+    problem_03()
