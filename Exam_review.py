@@ -9,6 +9,7 @@ from deriv import deriv
 from deriv import ln_deriv
 import unittest
 from poly12 import find_poly_2_zeros
+from hw03 import maximize_revenue
 import numpy as np
 import matplotlib.pyplot as plt
 import math
@@ -121,6 +122,15 @@ def problem_04():
     dy/dt = -1.875
 
     '''
+def problem_06():
+
+    demand_expr = make_plus(make_prod(const(-0.001), make_pwr('x', 1.0)), const(2.0))
+    print(demand_expr)
+    num_units, rev, price = maximize_revenue(demand_expr, constraint=lambda x: 0 <= x <= 1000)
+    print('x = ', num_units.get_val())
+    print("rev= ", rev.get_val())
+    print('price = ', price.get_val())
+    print("Max Revenue Test: pass")
 
 if __name__ == "__main__":
-    problem_04()
+    problem_06()
