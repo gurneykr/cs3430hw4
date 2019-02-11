@@ -131,5 +131,29 @@ def problem_06():
     print("rev= ", rev.get_val())
     print('price = ', price.get_val())
 
+def problem_07():
+    pass
+
+#problem 8 is the same as problem 4 in HW3
+
+def problem_09():
+    fex = make_e_expr(make_prod(const(-0.021), make_pwr('x', 1.0)))
+    print(fex)
+    expr, decay_const = fun1(fex, const(8.0))
+    print("f(x)= ",expr,"lambda=", decay_const)
+    remaining = fun2(expr, 3.0)
+    print("remaining= ", remaining)
+
+def fun1(expr, P0):#finds lambda
+    newExpr = make_prod(P0, expr)
+    decay_const = expr.get_deg().get_mult1()
+    return newExpr, decay_const
+
+
+def fun2(expr, n):#computes remaining material after n years
+    remaining = tof(expr)(n)
+    return remaining
+
+
 if __name__ == "__main__":
-    problem_06()
+    problem_09()
