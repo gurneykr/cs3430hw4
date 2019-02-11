@@ -130,7 +130,6 @@ def problem_06():
     print('x = ', num_units.get_val())
     print("rev= ", rev.get_val())
     print('price = ', price.get_val())
-    print("Max Revenue Test: pass")
 
 if __name__ == "__main__":
     problem_06()

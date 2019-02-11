@@ -98,4 +98,4 @@ def max_rev_test():
 
 
 if __name__ == "__main__":
-    arm_tumor_test()
+    oil_disk_test()
