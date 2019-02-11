@@ -93,5 +93,34 @@ def problem_03():
     drvf = tof(drv)
     print("f'(-1)= ",drvf(-1))
 
+def problem_04():
+    #x^2 -4y^2 = 9 when x = 5, y = -2, dx/dt = 3
+    x = 5.0
+    y = -2.0
+    dx_dt = 3.0
+
+    fex1 = make_pwr('x', 2.0)
+    fex2 = make_prod(const(-4.0), make_pwr('y', 2.0))
+    fex3 = make_plus(fex1, fex2)
+    print('f(x)=',fex3)
+    drv = deriv(fex3)
+    print("f'(x)=", drv)
+    top = drv.get_elt1()
+
+    bottom = make_prod(const(-1.0), drv.get_elt2())
+
+    dy_dt = (tof(top)(x)* dx_dt)/ (tof(bottom)(y))
+    print("dy_dt: ", dy_dt)
+
+    '''
+    d/dt(x^2) - d/dt(4y^2) =  d/dt 9
+    2x dx/dt - 8y dy/dt = 0   , subtract 8y
+    2x dx/dt  = 8y dy/dt , divide both sides by 8y to solve for dy/dt
+    (2x)/(8y) dx/dt = dy/dt
+    plug in x, y and dx/dt  to solve for dy/dt
+    dy/dt = -1.875
+
+    '''
+
 if __name__ == "__main__":
-    problem_03()
+    problem_04()
