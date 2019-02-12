@@ -145,8 +145,8 @@ def problem_09():
     print("f(x)= ",expr,"lambda=", decay_const)
     remaining = fun2(expr, 3.0)
     print("remaining= ", remaining)
-    remaining_after_n_years = fun3(expr, 2.0, 3.0)
-
+    remaining_after_n_years = fun3(expr, 33.0, 40.0)
+    print("after n years", remaining_after_n_years)
 
 def fun1(expr, P0):#finds lambda= decay_const
     newExpr = make_prod(P0, expr)
@@ -158,15 +158,42 @@ def fun2(expr, n):#computes remaining material after n years
     remaining = tof(expr)(n)
     return remaining
 
-def fun3(expr, half_life, n):
-    print("inside fun3")
+def fun3(expr, half_life, n):#given an expr and it's half life, compute what's left after n years
     p0 = expr.get_mult1().get_val()
-    lam_da = expr.get_mult2().get_deg().get_mult1().get_val()
-    print("type p0", type(p0))
-    print("type lambda ", type(lam_da))
-    inside = half_life / p0
-    t = math.e(inside) / lam_da
-    print('t= ', t)
+    remaining = p0 * (0.5**(n/half_life))
+    return remaining
+
+def problem_10(k):
+
+    f1 = lambda t: math.e ** (k * t)
+    f2 = lambda t: 2 * (math.e ** (k * t))
+    f3 = lambda t: 3 * (math.e ** (k* t))
+    f4 = lambda t: 4 * (math.e ** (k * t))
+    f5 = lambda t: 5 * (math.e ** (k* t))
+
+    xvals = np.linspace(-3, 3, 10000)
+    yvals1 = np.array([f1(x) for x in xvals])
+    yvals2 = np.array([f2(x) for x in xvals])
+    yvals3 = np.array([f3(x) for x in xvals])
+    yvals4 = np.array([f4(x) for x in xvals])
+    yvals5 = np.array([f5(x) for x in xvals])
+
+    fig1 = plt.figure(1)
+    fig1.suptitle('Solutions to y\' = 0.3y')
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.ylim([0, 10])
+    plt.xlim([-3, 3])
+    plt.grid()
+    plt.plot(xvals, yvals1, label='e^{0.3t}', c='r')
+    plt.plot(xvals, yvals2, label='2e^{0.3t}', c='g')
+    plt.plot(xvals, yvals3, label='3e^{0.3t}', c='g')
+    plt.plot(xvals, yvals4, label='4e^{0.3t}', c='b')
+    plt.plot(xvals, yvals5, label='5e^{0.3t}', c='m')
+
+    plt.legend(loc='best')
+    plt.show()
+
 
 if __name__ == "__main__":
-    problem_09()
+    problem_10(0.3)
