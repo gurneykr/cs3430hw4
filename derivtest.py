@@ -117,6 +117,27 @@ def loc_xtrm_2nd_drv_test(expr):
 
     return results
 
+
+def find_infl_pnts(expr):
+    #find the second derivative
+    second_drv = deriv(deriv(expr))
+    degree = findDegree(second_drv)
+    expr_tof = tof(expr)
+    inflection_points = []
+    if degree == 2:
+        zeros = find_poly_2_zeros(second_drv)
+        for x in zeros:
+            y = expr_tof(x.get_val())
+            inflection_points.append(make_point2d(x.get_val() , y))
+    else:
+        x = find_poly_1_zeros(second_drv)
+        y = expr_tof(x.get_val())
+        inflection_points.append(make_point2d(x.get_val(), y))
+
+    return inflection_points
+
+
+
 # def test_04():
 #     f1 = make_prod(make_const(27.0), make_pwr('x', 3.0))
 #     f2 = make_prod(make_const(-27.0), make_pwr('x', 2.0))

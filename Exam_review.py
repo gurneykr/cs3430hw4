@@ -9,6 +9,7 @@ from deriv import deriv
 from deriv import ln_deriv
 import unittest
 from poly12 import find_poly_2_zeros
+from derivtest import find_infl_pnts
 from hw03 import maximize_revenue
 import numpy as np
 import matplotlib.pyplot as plt
@@ -132,7 +133,22 @@ def problem_06():
     print('price = ', price.get_val())
 
 def problem_07():
-    pass
+
+    f1 = make_pwr('x', 3.0)
+    f2 = make_prod(make_const(-3.0), make_pwr('x', 2.0))
+    f3 = make_prod(make_const(0.0), make_pwr('x', 0.0))
+    f4 = make_plus(f1, f2)
+    f5 = make_plus(f4, f3)
+    f6 = make_plus(f5, make_const(5.0))
+    print(f6)
+    ips = find_infl_pnts(f6)
+    err = 0.0001
+    assert len(ips) == 1
+    ip = ips[0]
+    assert abs(ip.get_x().get_val() - 1.0) <= err
+    assert abs(ip.get_y().get_val() - 3.0) <= err
+    print("inflection points: ", ips)
+
 
 #problem 8 is the same as problem 4 in HW3
 
@@ -214,4 +230,5 @@ def problem_11(k, y0):
 
 if __name__ == "__main__":
     #problem_10(0.3)
-    problem_11(0.3, 6.0)
+    #problem_11(0.3, 6.0)
+    problem_07()
