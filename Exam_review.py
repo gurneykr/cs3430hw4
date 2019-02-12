@@ -194,6 +194,24 @@ def problem_10(k):
     plt.legend(loc='best')
     plt.show()
 
+def problem_11(k, y0):
+    f1 = lambda t: y0 * math.e ** (k * t)
+
+    xvals = np.linspace(-3, 3, 10000)
+    yvals1 = np.array([f1(x) for x in xvals])
+
+    fig1 = plt.figure(1)
+    fig1.suptitle('Solutions to y\' = 0.3y')
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.ylim([0, 10])
+    plt.xlim([-3, 3])
+    plt.grid()
+    plt.plot(xvals, yvals1, label='y0 * e^{0.3t}', c='r')
+
+    plt.legend(loc='best')
+    plt.show()
 
 if __name__ == "__main__":
-    problem_10(0.3)
+    #problem_10(0.3)
+    problem_11(0.3, 6.0)
