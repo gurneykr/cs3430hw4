@@ -139,12 +139,16 @@ def problem_07():
 def problem_09():
     fex = make_e_expr(make_prod(const(-0.021), make_pwr('x', 1.0)))
     print(fex)
-    expr, decay_const = fun1(fex, const(8.0))
+    P0 = const(8.0)
+    expr, decay_const = fun1(fex, P0)
+
     print("f(x)= ",expr,"lambda=", decay_const)
     remaining = fun2(expr, 3.0)
     print("remaining= ", remaining)
+    remaining_after_n_years = fun3(expr, 2.0, 3.0)
 
-def fun1(expr, P0):#finds lambda
+
+def fun1(expr, P0):#finds lambda= decay_const
     newExpr = make_prod(P0, expr)
     decay_const = expr.get_deg().get_mult1()
     return newExpr, decay_const
@@ -154,6 +158,15 @@ def fun2(expr, n):#computes remaining material after n years
     remaining = tof(expr)(n)
     return remaining
 
+def fun3(expr, half_life, n):
+    print("inside fun3")
+    p0 = expr.get_mult1().get_val()
+    lam_da = expr.get_mult2().get_deg().get_mult1().get_val()
+    print("type p0", type(p0))
+    print("type lambda ", type(lam_da))
+    inside = half_life / p0
+    t = math.e(inside) / lam_da
+    print('t= ', t)
 
 if __name__ == "__main__":
     problem_09()
